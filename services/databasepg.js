@@ -8,7 +8,7 @@ const client = new Client({
   database: "postgres",
 });
 
-client.connect().then(() => console.log("connected"))
+client.connect().then(() => console.log("connected"));
 
 client.query(`Select * from testping `, (err, res) => {
   if (!err) {
@@ -18,3 +18,5 @@ client.query(`Select * from testping `, (err, res) => {
   }
   client.end;
 });
+
+module.exports = { client };
