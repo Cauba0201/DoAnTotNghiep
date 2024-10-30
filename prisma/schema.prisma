@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admins {
+  id       Int    @id @default(autoincrement())
+  name     String @unique @db.VarChar(100)
+  email    String @unique @db.VarChar(500)
+  password String @db.VarChar(255)
+
+  @@map("admins")
+}
+
+model TestPing {
+  id          Int      @id @default(autoincrement())
+  country     String   @db.VarChar(120)
+  isp         String   @db.VarChar(100)
+  ip          String   @unique @db.VarChar(20)
+  packetSent  Int      @db.Integer
+  avgLatency  String   @db.VarChar(50)
+  packetLoss  String   @db.VarChar(50)
+  createdDate DateTime @default(now()) @map("created_date")
+  updatedDate DateTime @updatedAt @map("updated_date")
+
+  @@map("testping")
+}
