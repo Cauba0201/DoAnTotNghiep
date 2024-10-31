@@ -18,3 +18,12 @@ exports.createTestPing = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+exports.getTestPing = async (req, res) => {
+  try {
+    const test = await prisma.testPing.findMany();
+    return res.status(200).json(test);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};

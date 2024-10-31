@@ -8,6 +8,10 @@ exports.createAdmins = async (req, res) => {
       return res.status(422).json({ error: "Name is requered" });
     }
 
+    if (await prisma.admins.findUnique({ where: { name: req.body.name } })) {
+      return res.status(409).json({ error: `${req.body.name} already exists` });
+    }
+
     const newAdmins = await prisma.admins.create({
       data: {
         name: req.body.name,

@@ -4,7 +4,6 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config({ path: `${process.cwd()}./env` });
 
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -19,7 +18,8 @@ app.get("/", (req, res) => {
 //     message: "Route not found",
 //   });
 // });
-app.use("/admins", require('./routers/adminsRoute'));
+app.use("/admins", require("./routers/adminsRoute"));
+app.use("/test", require("./routers/testRoute"));
 // app.use(require("./routers/testRoute"));
 // app.use(require("./routers/userRoute"));
 // app.use(require("./routers/adminRoute"));
