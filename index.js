@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 // });
 app.use("/admins", require("./routers/adminsRoute"));
 app.use("/test", require("./routers/testRoute"));
+app.use("/testapp", require("./routers/testApp"));
 // app.use(require("./routers/testRoute"));
 // app.use(require("./routers/userRoute"));
 // app.use(require("./routers/adminRoute"));
