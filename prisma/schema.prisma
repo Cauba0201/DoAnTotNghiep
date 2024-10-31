@@ -8,24 +8,43 @@ datasource db {
 }
 
 model Admins {
-  id       Int    @id @default(autoincrement())
-  name     String @unique @db.VarChar(100)
-  email    String @unique @db.VarChar(500)
-  password String @db.VarChar(255)
+  id       Int     @id @default(autoincrement())
+  email    String  @unique @db.VarChar(500)
+  password String  @db.VarChar(255)
+  name     String? @db.VarChar(100)
 
   @@map("admins")
 }
 
 model TestPing {
-  id          Int      @id @default(autoincrement())
-  country     String   @db.VarChar(120)
-  isp         String   @db.VarChar(100)
-  ip          String   @unique @db.VarChar(20)
-  packetSent  Int      @db.Integer
-  avgLatency  String   @db.VarChar(50)
-  packetLoss  String   @db.VarChar(50)
-  createdDate DateTime @default(now()) @map("created_date")
-  updatedDate DateTime @updatedAt @map("updated_date")
+  id           Int      @id @default(autoincrement())
+  country      String   @db.VarChar(120)
+  ip           String   @db.VarChar(20)
+  avg_latency  String   @db.VarChar(10)
+  packet_loss  String   @db.VarChar(120)
+  created_date DateTime @default(now()) @map("created_date") @db.Timestamp(6)
+  updated_date DateTime @default(now()) @updatedAt @map("updated_date") @db.Timestamp(6)
+  packets_sent Int?
+  isp          String?  @db.VarChar(100)
 
   @@map("testping")
+}
+
+model pingapp {
+  id               Int       @id @default(autoincrement())
+  application_name String?   @db.VarChar(120)
+  ip               String?   @db.VarChar(20)
+  avg_latency      String?   @db.VarChar(10)
+  packet_loss      String?   @db.VarChar(10)
+  created_date     DateTime? @db.Timestamp(6)
+  updated_date     DateTime? @db.Timestamp(6)
+  packets_sent     Int?
+  isp              String?   @db.VarChar(100)
+}
+
+model users {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique @db.VarChar(60)
+  created_date DateTime @default(now()) @db.Timestamp(6)
+  updated_date DateTime @default(now()) @db.Timestamp(6)
 }
