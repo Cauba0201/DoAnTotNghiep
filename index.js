@@ -5,6 +5,7 @@ const app = express();
 require("dotenv").config({ path: `${process.cwd()}./env` });
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -12,18 +13,10 @@ app.get("/", (req, res) => {
 });
 
 // All routes will be here
-// app.use("*", (req, res, next) => {
-//   res.status(404).json({
-//     status: "Fail",
-//     message: "Route not found",
-//   });
-// });
 app.use("/admins", require("./routers/adminsRoute"));
 app.use("/test", require("./routers/testRoute"));
 app.use("/testapp", require("./routers/testApp"));
-// app.use(require("./routers/testRoute"));
-// app.use(require("./routers/userRoute"));
-// app.use(require("./routers/adminRoute"));
+app.use("/toplatency", require("./routers/topLatency"));
 
 const PORT = process.env.APP_PORT || 3000;
 app.listen(PORT, () => {
