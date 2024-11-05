@@ -26,6 +26,7 @@ model TestPing {
   updated_date DateTime @default(now()) @updatedAt @map("updated_date") @db.Timestamp(6)
   packets_sent Int?
   isp          String?  @db.VarChar(100)
+  local_isp    String?  @db.VarChar(100)
 
   @@map("testping")
 }
@@ -40,6 +41,7 @@ model pingapp {
   updated_date     DateTime? @db.Timestamp(6)
   packets_sent     Int?
   isp              String?   @db.VarChar(100)
+  local_isp        String?   @db.VarChar(100)
 
   @@map("pingapp")
 }
@@ -54,13 +56,14 @@ model users {
 }
 
 model top_countries_with_lowest_latency {
-  id           Int    @id @default(autoincrement())
-  country      String @db.VarChar(120)
-  isp          String @db.VarChar(100)
-  ip           String @db.VarChar(20)
-  avg_latency  String @db.VarChar(10)
-  packet_loss  String @db.VarChar(10)
+  id           Int     @id @default(autoincrement())
+  country      String  @db.VarChar(120)
+  isp          String  @db.VarChar(100)
+  ip           String  @db.VarChar(20)
+  avg_latency  String  @db.VarChar(10)
+  packet_loss  String  @db.VarChar(10)
   packets_sent Int?
+  local_isp    String? @db.VarChar(100)
 
   @@map("top_countries_with_lowest_latency")
 }
