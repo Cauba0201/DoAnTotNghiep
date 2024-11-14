@@ -67,3 +67,15 @@ model top_countries_with_lowest_latency {
 
   @@map("top_countries_with_lowest_latency")
 }
+
+model pingmtr {
+  id          Int      @id @default(autoincrement())
+  location    String // Địa điểm (ví dụ: Singapore, Hongkong, Taiwan, ...)
+  ipHost      String // Địa chỉ IP hoặc hostname (ví dụ: 142.126.97.26)
+  latency     Int // Độ trễ (LTC), đơn vị ms (milliseconds)
+  packetLoss  Float // Tỷ lệ mất gói (PKL), đơn vị phần trăm (%)
+  packetsSent Int // Số gói tin đã gửi (SENT)
+  createdAt   DateTime @default(now())
+
+  @@map("pingmtr")
+}
