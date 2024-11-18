@@ -13,28 +13,13 @@ exports.createPing = async (req, res) => {
     if (error) {
       return res.status(500).json({ error: stderr });
     } else {
-      const result = parseMtrOutput(stdout,ip);
+      const result = parseMtrOutput(stdout, ip);
       res.json(result);
     }
   });
 };
 
-function parseMtrOutput(output,ip) {
-  // Giả sử bạn sẽ xử lý chuỗi `output` từ `mtr` để tách thông tin LTC, PKL và SENT
-  // Trả về dưới dạng một object JSON với format giống trong ảnh
-
-  // Đây chỉ là ví dụ xử lý, bạn cần điều chỉnh cho phù hợp với đầu ra thực tế
-  //   return output.split("\n").map((line) => {
-  //     // Tách các thông tin cần thiết từ dòng đầu ra của `mtr`
-  //     const columns = line.trim().split(/\s+/);
-  //     return {
-  //       location: columns[0],
-  //       ip: columns[1],
-  //       ltc: columns[2],
-  //       pkl: columns[3],
-  //       sent: columns[4],
-  //     };
-
+function parseMtrOutput(output, ip) {
   const result = output.split("\n").map((line) => {
     const timeMatch = line.match(/time=(\d+ms)/);
     const lossMatch = line.match(/Lost = (\d+)/);

@@ -46,14 +46,6 @@ model pingapp {
   @@map("pingapp")
 }
 
-model users {
-  id           Int      @id @default(autoincrement())
-  name         String   @unique @db.VarChar(60)
-  created_date DateTime @default(now()) @db.Timestamp(6)
-  updated_date DateTime @default(now()) @db.Timestamp(6)
-
-  @@map("users")
-}
 
 model top_countries_with_lowest_latency {
   id           Int     @id @default(autoincrement())
