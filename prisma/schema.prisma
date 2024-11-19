@@ -72,13 +72,13 @@ model pingmtr {
 }
 
 model chart_four {
-  id          Int      @id @default(autoincrement())
-  avg_latency String   @db.VarChar(10)
-  local_isp   String   @db.VarChar(100)
-  createdAt   DateTime @default(now())
-
-  @@map("chart_four")
-}
+    id          Int      @id @default(autoincrement())
+    avg_latency Int
+    local_isp   String   @db.VarChar(100)
+    createdAt   DateTime @default(now())
+  
+    @@map("chart_four")
+  }
 
 model DataTest {
   id           Int      @id @default(autoincrement())

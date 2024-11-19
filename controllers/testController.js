@@ -21,7 +21,7 @@ exports.createTestPing = async (req, res) => {
 
 exports.getTestPing = async (req, res) => {
   try {
-    const test = await prisma.testPing.findMany();
+    const test = await prisma.dataTest.findMany();
     return res.status(200).json(test);
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -31,42 +31,73 @@ exports.getTestPing = async (req, res) => {
 exports.getLatencyTestPing = async (req, res) => {
   try {
     const latency = await prisma.chart_four.findMany();
-    
+
     return res.status(200).json(latency);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
 
-// exports.transferTestPingToChartFour = async (req, res) => {
-//   try {
-//     const testPingData = await prisma.testPing.findMany({
-//       select: {
-//         id: true,
-//         avg_latency: true,
-//         local_isp: true,
-//         // created_date: true,
-//       },
-//     });
+exports.getLatencyByIsp = async (req, res) => {
+  try {
+    // Lấy slug từ URL (vd: fpt, vnpt, viettel)
+    const { isp } = req.params;
 
-//     if (testPingData.length === 0) {
-//       return res.status(400).json({ message: "No data found in testPing" });
-//     }
+    // Nếu không có slug (truy cập `/latency`), trả về tất cả 3 nhà mạng
+    if (!isp) {
+      const allLatencies = await prisma.chart_four.findMany({
+        where: {
+          OR: [
+            {
+              local_isp: {
+                contains: "FPT",
+                mode: "insensitive",
+              },
+            },
+            {
+              local_isp: {
+                contains: "Viettel",
+                mode: "insensitive",
+              },
+            },
+            {
+              local_isp: {
+                contains: "VNPT",
+                mode: "insensitive",
+              },
+            },
+          ],
+        },
+        select: {
+          avg_latency: true,
+          local_isp: true,
+        },
+      });
+      return res.status(200).json(allLatencies);
+    }
 
-//     const chartFourData = testPingData.map((item) => ({
-//       id: item.id,
-//       avg_latency: item.avg_latency,
-//       local_isp: item.local_isp,
-//       // created_date: item.created_date,
-//     }));
+    // Nếu có slug, lọc theo nhà mạng cụ thể
+    const filteredLatencies = await prisma.chart_four.findMany({
+      where: {
+        local_isp: {
+          contains: isp,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        avg_latency: true,
+        local_isp: true,
+      },
+    });
 
-//     await prisma.chart_four.createMany({
-//       data: chartFourData,
-//       skipDuplicates: true,
-//     });
+    // Nếu không tìm thấy dữ liệu cho nhà mạng, trả về 404
+    if (filteredLatencies.length === 0) {
+      return res.status(404).json({ message: `No data found for ${isp}` });
+    }
 
-//     return res.status(200).json({ message: "Data transferred successfully!" });
-//   } catch (error) {
-//     return res.status(500).json({ message: error.message });
-//   }
-// };
+    // Trả về dữ liệu của nhà mạng cụ thể
+    return res.status(200).json(filteredLatencies);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
