@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 // All routes will be here
 app.use("/admins", require("./routers/adminsRoute"));
 app.use("/test", require("./routers/testRoute"));
-app.use("/testapp", require("./routers/testApp"));
+app.use("/testapp", require("./routers/testAppRoute"));
 app.use("/toplatency", require("./routers/topLatency"));
 app.use("/ping", require("./routers/pingRoute"));
 

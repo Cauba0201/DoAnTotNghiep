@@ -46,7 +46,6 @@ model pingapp {
   @@map("pingapp")
 }
 
-
 model top_countries_with_lowest_latency {
   id           Int     @id @default(autoincrement())
   country      String  @db.VarChar(120)
@@ -70,4 +69,28 @@ model pingmtr {
   createdAt   DateTime @default(now())
 
   @@map("pingmtr")
+}
+
+model chart_four {
+  id          Int      @id @default(autoincrement())
+  avg_latency String   @db.VarChar(10)
+  local_isp   String   @db.VarChar(100)
+  createdAt   DateTime @default(now())
+
+  @@map("chart_four")
+}
+
+model DataTest {
+  id           Int      @id @default(autoincrement())
+  country      String   @db.VarChar(120)
+  ip           String   @db.VarChar(20)
+  avg_latency  Int
+  packet_loss  Int
+  created_date DateTime @default(now()) @map("created_date") @db.Timestamp(6)
+  updated_date DateTime @default(now()) @updatedAt @map("updated_date") @db.Timestamp(6)
+  packets_sent Int?
+  isp          String?  @db.VarChar(100)
+  local_isp    String?  @db.VarChar(100)
+
+  @@map("data_test")
 }
