@@ -102,6 +102,55 @@ exports.getLatencyByIsp = async (req, res) => {
   }
 };
 
+exports.getLatencyHourByIsp = async (req, res) => {
+  try {
+    const { isp } = req.params;
+
+    // Nếu không có slug (lấy tất cả nhà mạng)
+    if (!isp) {
+      const allLatencies = await prisma.$queryRaw`
+        SELECT 
+          local_isp,
+          -- DATE_TRUNC('hour', "createdAt") AS hour,
+          EXTRACT('hour' FROM "createdAt") AS hour_of_day,
+          ROUND(AVG(avg_latency), 2) AS avg_latency
+        FROM chart_four
+        WHERE 
+          local_isp ILIKE '%FPT%' OR 
+          local_isp ILIKE '%Viettel%' OR 
+          local_isp ILIKE '%VNPT%'
+        GROUP BY local_isp, hour_of_day
+        ORDER BY hour_of_day ASC;
+      `;
+      return res.status(200).json(allLatencies);
+    }
+
+    // Nếu có slug, lọc theo nhà mạng cụ thể
+    const filteredLatencies = await prisma.$queryRaw`
+      SELECT 
+        local_isp,
+        DATE_TRUNC('hour', "createdAt") AS hour,
+        ROUND(AVG(avg_latency), 2) AS avg_latency
+      FROM chart_four
+      WHERE 
+        local_isp ILIKE ${`%${isp}%`}
+      GROUP BY local_isp, DATE_TRUNC('hour', "createdAt")
+      ORDER BY hour ASC;
+    `;
+
+    // Kiểm tra nếu không có dữ liệu
+    if (filteredLatencies.length === 0) {
+      return res.status(404).json({ message: `No data found for ${isp}` });
+    }
+
+    // Trả về dữ liệu
+    return res.status(200).json(filteredLatencies);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+
 exports.getPacketLoss = async (req, res) => {
   try {
     const packetloss = await prisma.packet_loss.findMany();
