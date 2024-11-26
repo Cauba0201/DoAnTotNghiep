@@ -18,6 +18,7 @@ app.use("/test", require("./routers/testRoute"));
 app.use("/testapp", require("./routers/testAppRoute"));
 app.use("/toplatency", require("./routers/topLatency"));
 app.use("/ping", require("./routers/pingRoute"));
+app.use("/geo", require("./routers/geoChartRoute"));
 
 const PORT = process.env.APP_PORT || 3000;
 app.listen(PORT, () => {
