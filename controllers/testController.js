@@ -150,7 +150,6 @@ exports.getLatencyHourByIsp = async (req, res) => {
   }
 };
 
-
 exports.getPacketLoss = async (req, res) => {
   try {
     const packetloss = await prisma.packet_loss.findMany();
@@ -223,4 +222,4 @@ exports.getPacketLossByIsp = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-}
+};
