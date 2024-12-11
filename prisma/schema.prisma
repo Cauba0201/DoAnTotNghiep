@@ -103,3 +103,35 @@ model packet_loss {
 
   @@map("packet_loss")
 }
+
+model data_vnpt_3_weeks {
+  id           Int      @id @default(autoincrement())
+  country      String   @db.VarChar(120)
+  ip           String   @db.VarChar(20)
+  avg_latency  Int
+  packet_loss  Int
+  packets_sent Int
+  isp          String   @db.VarChar(100)
+  local_isp    String   @db.VarChar(100)
+  created_date DateTime @db.Date
+
+  @@map("data_vnpt_3_weeks")
+}
+
+model AvgLatencyDay {
+  id          Int      @id @default(autoincrement())
+  latency     Int      @default(0)
+  local_isp   String   @db.VarChar(100)
+  update_date DateTime @db.Date
+
+  @@map("avg_latency_day")
+}
+
+model AvgPacketLossDay {
+  id          Int      @id @default(autoincrement())
+  packloss    Int
+  local_isp   String   @db.VarChar(100)
+  update_date DateTime @db.Date
+
+  @@map("avg_packet_loss_day") // Tên bảng trong cơ sở dữ liệu
+}

@@ -30,13 +30,42 @@ exports.getTestPing = async (req, res) => {
 
 exports.getLatencyTestPing = async (req, res) => {
   try {
-    const latency = await prisma.chart_four.findMany();
+    const latency = await prisma.chart_four.findMany(); //chart four
 
     return res.status(200).json(latency);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
+
+// exports.getLatencyTestPing = async (req, res) => {
+//   try {
+//     const { timeframe } = req.query;
+//     if (!["day", "week"].includes(timeframe)) {
+//       return res.status(400).json({ message: error.message });
+//     }
+
+//     // Xac dinh thoi gian lay mau
+//     const hours = timeframe === "day" ? 24 : 168;
+//     const endDate = new Date();
+//     const startDate = new Date(endDate.getTime() - hours * 60 * 60 * 1000);
+
+//     const latency = await prisma.$queryRaw`
+//       SELECT
+//         DATE_TRUNC('hour', "createdAt") AS hour,
+//         AVG("avg_latency") AS avg_latency,
+//         "local_isp"
+//       FROM "chart_four"
+//       WHERE "createdAt" BETWEEN ${startDate} AND ${endDate}
+//       GROUP BY hour, "local_isp"
+//       ORDER BY hour ASC;
+//     `;
+
+//     return res.status(200).json(latency);
+//   } catch (error) {
+//     return res.status(400).json({ error: error.message });
+//   }
+// };
 
 exports.getLatencyByIsp = async (req, res) => {
   try {
@@ -120,7 +149,8 @@ exports.getLatencyHourByIsp = async (req, res) => {
           local_isp ILIKE '%Viettel%' OR 
           local_isp ILIKE '%VNPT%'
         GROUP BY local_isp, hour_of_day
-        ORDER BY hour_of_day ASC;
+        ORDER BY hour_of_day ASC
+        LIMIT 168;
       `;
       return res.status(200).json(allLatencies);
     }
@@ -152,7 +182,7 @@ exports.getLatencyHourByIsp = async (req, res) => {
 
 exports.getPacketLoss = async (req, res) => {
   try {
-    const packetloss = await prisma.packet_loss.findMany();
+    const packetloss = await prisma.avgPacketLossDay.findMany();
 
     return res.status(200).json(packetloss);
   } catch (error) {
