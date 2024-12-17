@@ -135,3 +135,14 @@ model AvgPacketLossDay {
 
   @@map("avg_packet_loss_day") // Tên bảng trong cơ sở dữ liệu
 }
+
+model DataByCountry {
+  id Int  @id @default(autoincrement())
+  country String @db.VarChar(120)
+  avg_latency Int
+  packet_loss Int
+  local_isp String  @db.VarChar(100)
+  update_date DateTime @db.Date
+
+  @@map("data_by_country")
+}
