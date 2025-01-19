@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/images/logo_lobackground.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
   <link rel="stylesheet" href="/css/style.css">
@@ -9,18 +10,17 @@
 <body>
   <%- include("../partials/header") %> <!-- Include header -->
 
-  <main>
+  <main class="container">
     <div>
       <h1>Welcome to National Connection Quality Monitoring System</h1>
     </div>
-    <section>
-      <h2>Statistics</h2>
-      <ul>
-        <li>Latency: <%= stats.totalUsers %></li>
-        <li>Packet Loss: <%= stats.activeUsers %></li>
-        <li>Jitter: <%= stats.totalRevenue %></li>
-      </ul>
-    </section>
+    <div class="hero-section">
+      <div class="content">
+        <h2 class="subtitle">Hello, Apple Intelligence.</h2>
+        <button class="buy-button">Buy</button>
+        <p class="price">From $1599 or $133.25/mo. for 12 mo.*</p>
+        <p class="availability">Apple Intelligence Now Available</p>
+      </div>
   </main>
 
   <%- include("../partials/footer") %> <!-- Include footer -->

@@ -1,15 +1,29 @@
-<header>
-    <nav class="flex">
-        <div>
-            <ul>
-              <li><a href="/admin/dashboard">Dashboard</a></li>
-              <li><a href="/admin/users">Users</a></li>
-              <li><a href="/admin/settings">Settings</a></li>
-            </ul>
-        </div>
-        <div>
-          <h5>Welcome, <%= user %></h5>
-        </div>
-    </nav>
-  </header>
-  
+<header style="background-color: black; color: white; padding: 10px 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+  <nav style="display: flex; align-items: center; justify-content: space-between;">
+    <!-- Left Logo Section -->
+    <div>
+      <a href="/" style="text-decoration: none; color: white; font-size: 1.5em; font-weight: bold;">
+        <img src="/images/logo_lobackground.png" alt="Apple Logo" style="height: 24px; vertical-align: middle;">
+      </a>
+      <!-- <a href="/account" style="color: white; text-decoration: none; font-weight: bold">National Connection Quality Monitoring System®</a> -->
+    </div>
+
+    <!-- Center Navigation Links -->
+    <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px; font-size: 0.9em;">
+      <li><a href="/" style="color: white; text-decoration: none;">Store</a></li>
+      <li><a href="/mac" style="color: white; text-decoration: none;">Mac</a></li>
+      <li><a href="/ipad" style="color: white; text-decoration: none;">iPad</a></li>
+      <li><a href="/iphone" style="color: white; text-decoration: none;">iPhone</a></li>
+      <li><a href="/watch" style="color: white; text-decoration: none;">Watch</a></li>
+      <li><a href="/accessories" style="color: white; text-decoration: none;">Accessories</a></li>
+    </ul>
+
+    <!-- Right User Section -->
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <a href="/cart" style="color: white; text-decoration: none;">
+        <img src="/images/user-light.svg" alt="Cart Icon" style="height: 20px;">
+      </a>
+      <a href="/account" style="color: white; text-decoration: none;">An Nguyen</a>
+    </div>
+  </nav>
+</header>
